@@ -2,6 +2,7 @@ package engines
 
 import (
 	"github.com/Tsuki124/crawlab-sdk/internal/interfaces"
+	"github.com/Tsuki124/crawlab-sdk/internal/driver"
 	"github.com/crawlab-team/go-trace"
 	"github.com/qiniu/qmgo"
 	"sync"
