@@ -2,6 +2,7 @@ package engines
 
 import (
 	"context"
+	"github.com/Tsuki124/crawlab-sdk/internal/interfaces"
 	"github.com/crawlab-team/go-trace"
 	"github.com/qiniu/qmgo"
 	"go.mongodb.org/mongo-driver/bson"
