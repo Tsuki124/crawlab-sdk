@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"github.com/crawlab-team/go-trace"
 	"github.com/tidwall/gjson"
-	"gopkg.in/resty.v1"
+	"github.com/go-resty/resty/v2"
 	"os"
 	"path/filepath"
 	"strings"
@@ -100,6 +100,7 @@ func (my *SeaweedFS) Download(path string) ([]byte, error) {
 func (my *SeaweedFS) Upload(path string, content []byte) error {
 	url := my._URL(path)
 	req := my._CLIENT.R()
+	req.SetHeader("Accept-Encoding","gzip, deflate")
 
 	req.SetBody(content)
 	resp,err := req.Put(url)
