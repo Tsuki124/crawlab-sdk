@@ -1,6 +1,10 @@
 package crawlab_sdk
 
-import "sync"
+import (
+	"github.com/Tsuki124/crawlab-sdk/internal/engines"
+	"github.com/Tsuki124/crawlab-sdk/internal/interfaces"
+	"sync"
+)
 
 var SQL = sqlService{_DBs: make(map[string]interfaces.SQLDb)}
 
