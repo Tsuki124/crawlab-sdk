@@ -1,8 +1,8 @@
 package driver
 
 import (
-	"crawlab-sdk/internal/config"
-	"crawlab-sdk/internal/constants"
+	"github.com/Tsuki124/crawlab-sdk/internal/config"
+	"github.com/Tsuki124/crawlab-sdk/internal/constants"
 	"errors"
 	"fmt"
 	"github.com/crawlab-team/go-trace"

@@ -1,8 +1,8 @@
 package engines
 
 import (
-	"crawlab-sdk/internal/constants"
-	"crawlab-sdk/internal/interfaces"
+	"github.com/Tsuki124/crawlab-sdk/internal/constants"
+	"github.com/Tsuki124/crawlab-sdk/internal/interfaces"
 	"crypto/tls"
 	"errors"
 	"fmt"

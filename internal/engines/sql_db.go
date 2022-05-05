@@ -1,8 +1,8 @@
 package engines
 
 import (
-	"crawlab-sdk/internal/driver"
-	"crawlab-sdk/internal/interfaces"
+	"github.com/Tsuki124/crawlab-sdk/internal/driver"
+	"github.com/Tsuki124/crawlab-sdk/internal/interfaces"
 	"github.com/crawlab-team/go-trace"
 	"gorm.io/gorm"
 )
