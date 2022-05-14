@@ -21,7 +21,7 @@ func NewRedis(name int) interfaces.RedisDb {
 	return &RedisDb{_DB: db}
 }
 
-func (my *RedisDb) Subscribe(topic string,msgFn func(pubsub interfaces.RedisMsg))  {
+func (my *RedisDb) Subscribe(topic string,msgFn func(channel,pattern,payload string))  {
 	pubsub := my._DB.Subscribe(topic)
 	defer func(pubsub *redis.PubSub) {
 		err := pubsub.Close()
@@ -31,12 +31,7 @@ func (my *RedisDb) Subscribe(topic string,msgFn func(pubsub interfaces.RedisMsg)
 	}(pubsub)
 
 	for pubsubMsg := range pubsub.Channel() {
-		msg := &RedisMsg{
-			Channel: pubsubMsg.Channel,
-			Pattern: pubsubMsg.Pattern,
-			Payload: pubsubMsg.Payload,
-		}
-		msgFn(msg)
+		msgFn(pubsubMsg.Channel,pubsubMsg.Pattern,pubsubMsg.Payload)
 	}
 
 }
