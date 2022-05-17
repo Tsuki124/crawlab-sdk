@@ -49,8 +49,13 @@ func (my *SeaweedFS) _InfoJsonURL(path string) string {
 	return fmt.Sprintf(constants.KEY_SEAWEED_FS_FILE_INFO_JSON, my._URL(path))
 }
 
-func (my *SeaweedFS) List(dirpath string) ([]interfaces.SeaweedFile, error) {
-	jsonURL := my._ListJsonURL(dirpath)
+func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
+	var path string
+	if len(dirpath)>0 {
+		path = dirpath[0]
+	}
+
+	jsonURL := my._ListJsonURL(path)
 	req := my._CLIENT.SetHeader("Accept", "application/json").R()
 
 	resp, err := req.Get(jsonURL)

@@ -221,10 +221,10 @@ func TestUseGorm(t *testing.T) {
 ``` Go
 func TestRedisPublish(t *testing.T) {
 	go func() {
-		sdk.Redis.Db().Subscribe("topic", func(msg interfaces.RedisMsg) {
-			fmt.Println(msg.GetChannel())
-			fmt.Println(msg.GetPattern())
-			fmt.Println(msg.GetPayload())
+		sdk.Redis.Db().Subscribe("topic", func(channel,pattern,payload string) {
+			fmt.Println(channel)
+			fmt.Println(pattern)
+			fmt.Println(payload)
 		})
 	}()
 

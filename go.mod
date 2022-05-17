@@ -5,12 +5,12 @@ go 1.17
 require (
 	github.com/crawlab-team/go-trace v0.1.1
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/lib/pq v1.10.5
 	github.com/qiniu/qmgo v1.1.0
 	github.com/tidwall/gjson v1.14.1
 	go.mongodb.org/mongo-driver v1.9.1
-	gopkg.in/resty.v1 v1.12.0
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.5
@@ -50,7 +50,7 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	github.com/ztrue/tracerr v0.3.0 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
-	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
+	golang.org/x/net v0.0.0-20211029224645-99673261e6eb // indirect
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9 // indirect
 	golang.org/x/sys v0.0.0-20211007075335-d3039528d8ac // indirect
 	golang.org/x/text v0.3.7 // indirect
