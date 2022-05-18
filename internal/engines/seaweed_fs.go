@@ -25,7 +25,7 @@ func NewSeaweedFS(prePath string) interfaces.SeaweedFS {
 	client := resty.New().
 		SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 
-	fsURL := strings.TrimRight(os.Getenv(constants.ENV_SEAWEED_FS_FILER_URL), "/")
+	fsURL := strings.TrimSuffix(os.Getenv(constants.ENV_SEAWEED_FS_FILER_URL), "/")
 	prePath = strings.Trim(prePath, "/")
 	addr := fmt.Sprintf("%s/%s", fsURL, prePath)
 
@@ -36,17 +36,17 @@ func NewSeaweedFS(prePath string) interfaces.SeaweedFS {
 	return engine
 }
 
-func (my *SeaweedFS) _URL(path string) string {
+func (my *SeaweedFS) url(path string) string {
 	path = strings.Trim(path, "/")
 	return my._ADDR + "/" + path
 }
 
-func (my *SeaweedFS) _ListJsonURL(path string) string {
-	return fmt.Sprintf(constants.KEY_SEAWEED_FS_FILE_LIST_JSON, my._URL(path))
+func (my *SeaweedFS) listJsonURL(path string) string {
+	return fmt.Sprintf(constants.KEY_SEAWEED_FS_FILE_LIST_JSON, my.url(path))
 }
 
-func (my *SeaweedFS) _InfoJsonURL(path string) string {
-	return fmt.Sprintf(constants.KEY_SEAWEED_FS_FILE_INFO_JSON, my._URL(path))
+func (my *SeaweedFS) infoJsonURL(path string) string {
+	return fmt.Sprintf(constants.KEY_SEAWEED_FS_FILE_INFO_JSON, my.url(path))
 }
 
 func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
@@ -55,7 +55,7 @@ func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
 		path = dirpath[0]
 	}
 
-	jsonURL := my._ListJsonURL(path)
+	jsonURL := my.listJsonURL(path)
 	req := my._CLIENT.SetHeader("Accept", "application/json").R()
 
 	resp, err := req.Get(jsonURL)
@@ -68,12 +68,12 @@ func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
 
 	files := make([]interfaces.SeaweedFile, 0)
 	bodyJson := gjson.ParseBytes(resp.Body())
-	prePath := bodyJson.Get("Path").Str
+	prePath := bodyJson.Get("Path").String()
 	for _, entityJson := range bodyJson.Get("Entries").Array() {
 		file := &SeaweedFile{}
-		fullPath := entityJson.Get("FullPath").Str
-		name := strings.TrimLeft(fullPath,prePath)
-		mime := entityJson.Get("Mime").Str
+		fullPath := entityJson.Get("FullPath").String()
+		name := strings.TrimPrefix(fullPath,prePath)
+		mime := entityJson.Get("Mime").String()
 
 		file.name = name
 		file.path = fullPath
@@ -88,7 +88,7 @@ func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
 }
 
 func (my *SeaweedFS) Download(path string) ([]byte, error) {
-	url := my._URL(path)
+	url := my.url(path)
 	req := my._CLIENT.R()
 
 	resp,err := req.Get(url)
@@ -103,7 +103,7 @@ func (my *SeaweedFS) Download(path string) ([]byte, error) {
 }
 
 func (my *SeaweedFS) Upload(path string, content []byte) error {
-	url := my._URL(path)
+	url := my.url(path)
 	req := my._CLIENT.R()
 	req.SetHeader("Accept-Encoding","gzip, deflate")
 
@@ -120,7 +120,7 @@ func (my *SeaweedFS) Upload(path string, content []byte) error {
 }
 
 func (my *SeaweedFS) Delete(path string) error {
-	url := my._URL(path)
+	url := my.url(path)
 	req := my._CLIENT.R()
 
 	resp,err := req.Delete(url)
@@ -135,7 +135,7 @@ func (my *SeaweedFS) Delete(path string) error {
 }
 
 func (my *SeaweedFS) Info(path string) (interfaces.SeaweedFile,error) {
-	url := my._InfoJsonURL(path)
+	url := my.infoJsonURL(path)
 	req := my._CLIENT.R()
 
 	resp,err := req.Get(url)
@@ -147,9 +147,9 @@ func (my *SeaweedFS) Info(path string) (interfaces.SeaweedFile,error) {
 	}
 
 	infoJson := gjson.ParseBytes(resp.Body())
-	fullPath := infoJson.Get("FullPath").Str
+	fullPath := infoJson.Get("FullPath").String()
 	name := filepath.Base(fullPath)
-	mime := infoJson.Get("Mime").Str
+	mime := infoJson.Get("Mime").String()
 
 	file := &SeaweedFile{name: name,path: fullPath}
 	if mime=="" {
