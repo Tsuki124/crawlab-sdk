@@ -72,7 +72,7 @@ func (my *SeaweedFS) List(dirpath ...string) ([]interfaces.SeaweedFile, error) {
 	for _, entityJson := range bodyJson.Get("Entries").Array() {
 		file := &SeaweedFile{}
 		fullPath := entityJson.Get("FullPath").String()
-		name := strings.TrimPrefix(fullPath,prePath)
+		name := strings.Trim(strings.TrimPrefix(fullPath,prePath),"/")
 		mime := entityJson.Get("Mime").String()
 
 		file.name = name
