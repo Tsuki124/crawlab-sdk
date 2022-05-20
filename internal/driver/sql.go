@@ -1,17 +1,21 @@
 package driver
 
 import (
-	"github.com/Tsuki124/crawlab-sdk/internal/config"
-	"github.com/Tsuki124/crawlab-sdk/internal/constants"
 	"errors"
 	"fmt"
+	"github.com/Tsuki124/crawlab-sdk/internal/config"
+	"github.com/Tsuki124/crawlab-sdk/internal/constants"
 	"github.com/crawlab-team/go-trace"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
+	"log"
+	"os"
+	"time"
 )
 
 var SQL = sqlDriver{}
@@ -46,8 +50,18 @@ func (my *sqlDriver) New(name string) (*gorm.DB, error) {
 		configMap[constants.ENV_SQL_PORT],
 		name)
 
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer（日志输出的目标，前缀和日志包含的内容——译者注）
+		logger.Config{
+			SlowThreshold:             10 * time.Second, // 慢 SQL 阈值
+			LogLevel:                  logger.Silent,    // 日志级别
+			IgnoreRecordNotFoundError: true,             // 忽略ErrRecordNotFound（记录未找到）错误
+			Colorful:                  false,            // 禁用彩色打印
+		},
+	)
 	dialector := openDialectorHander(dsn)
 	engine, err := gorm.Open(dialector, &gorm.Config{
+		Logger: newLogger,
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // 使用单数表名
 		},
