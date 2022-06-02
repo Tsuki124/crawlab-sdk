@@ -1,21 +1,10 @@
 package interfaces
 
-import (
-	"gorm.io/gorm"
-	"xorm.io/xorm"
-)
+import "gorm.io/gorm"
 
 type SQLTb interface {
-	Insert(data interface{}) (sql string,err error)
-	Delete(query interface{}, args ...interface{}) (sql string,err error)
-	Update(replacement interface{},query interface{}, args ...interface{}) (sql string,err error)
-	Upsert(replacement interface{},query interface{}, args ...interface{}) (sql string,err error)
-	FindOne(result interface{}, query interface{}, args ...interface{}) (sql string,err error)
-	FindALL(result interface{}, query interface{}, args ...interface{}) (sql string,err error)
-
-	Count(query interface{}, args ...interface{}) (count int64,err error)
-	Exist(query interface{}, args ...interface{}) (has bool,err error)
-	UseGorm(queryFn func(tx *gorm.DB) error) error
-	UseXorm(queryFn func(tx *xorm.Engine) error) error
+	Exec(queryFn func(tx *gorm.DB) *gorm.DB) error //执行
+	ExecToSQL(queryFn func(tx *gorm.DB) *gorm.DB) (sql string,err error) //先执行后生成SQL
+	ToSQLExec(queryFn func(tx *gorm.DB) *gorm.DB) (sql string,err error) //先产生SQL后执行
 }
 

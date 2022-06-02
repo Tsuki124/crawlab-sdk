@@ -14,7 +14,6 @@ require (
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.5
-	xorm.io/xorm v1.3.0
 )
 
 require (
@@ -22,8 +21,8 @@ require (
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
-	github.com/goccy/go-json v0.8.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/google/go-cmp v0.5.3 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -34,14 +33,12 @@ require (
 	github.com/jackc/pgx/v4 v4.16.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
-	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/onsi/ginkgo v1.7.0 // indirect
+	github.com/onsi/gomega v1.4.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
@@ -54,5 +51,4 @@ require (
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9 // indirect
 	golang.org/x/sys v0.0.0-20211007075335-d3039528d8ac // indirect
 	golang.org/x/text v0.3.7 // indirect
-	xorm.io/builder v0.3.9 // indirect
 )
