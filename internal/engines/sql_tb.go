@@ -89,16 +89,16 @@ func (my *SQLTb) Count(query interface{}, args ...interface{}) (int64,error) {
 }
 
 func (my *SQLTb) Exist(query interface{}, args ...interface{}) (bool,error) {
-	count,err := my.Count(query,args)
-	if err!=nil {
-		return false,err
-	}
-
-	if count>0 {
+	err := my._InstanceFn().First(query,args).Error
+	if err==nil {
 		return true,nil
 	}
 
-	return false,nil
+	if err!=nil && err.Error()==gorm.ErrRecordNotFound.Error() {
+		return false,nil
+	}
+
+	return false,err
 }
 
 func (my *SQLTb) UseGorm(queryFn func(tx *gorm.DB) error) error {
